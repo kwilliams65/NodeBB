@@ -58,7 +58,7 @@
     "nodebb-plugin-spam-be-gone": "0.4.6",
     "nodebb-rewards-essentials": "0.0.8",
     "nodebb-theme-lavender": "3.0.13",
-    "nodebb-theme-persona": "git+ssh://git@github.com:careerbuilder/nodebb-theme-persona.git",
+    "nodebb-theme-persona": "git+https://git@github.com/careerbuilder/nodebb-theme-persona.git",
     "nodebb-theme-vanilla": "5.0.78",
     "nodebb-widget-essentials": "2.0.9",
     "nodemailer": "2.0.0",
