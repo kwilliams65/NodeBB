@@ -50,4 +50,15 @@
 			<div class="panel-footer"><small><strong>Figure 4</strong> &ndash; Daily posts made in this category</small></div>
 		</div>
 	</div>
+	<div class="col-sm-6 text-center">
+    		<div class="panel panel-default">
+    			<div class="panel-body">
+    				<div><canvas id="resolutions" height="250"></canvas></div>
+    				<p>
+
+    				</p>
+    			</div>
+    			<div class="panel-footer"><small><strong>Figure 5</strong> &ndash; Resolved Issues</small></div>
+    		</div>
+    </div>
 </div>
