@@ -85,7 +85,7 @@ var db = require('./database');
 
 		if (Object.keys(counters).length > 0) {
 			for(var key in counters) {
-				if (counters.hasOwnProperty(key)) {					
+				if (counters.hasOwnProperty(key)) {
 					dbQueue.push(async.apply(db.sortedSetIncrBy, 'analytics:' + key, counters[key], today.getTime()));
 					delete counters[key];
 				}
@@ -156,6 +156,16 @@ var db = require('./database');
 		});
 	};
 
+	Analytics.getTotalResolved = function(cid, callback) {
+		db.getResolvedCount(cid, function(err, counts) {
+			if (err) {
+				return callback(err);
+			}
+
+			callback(null, counts);
+		});
+	};
+
 	Analytics.getUnwrittenPageviews = function() {
 		return pageViews;
 	};
@@ -184,6 +194,7 @@ var db = require('./database');
 			'pageviews:daily': async.apply(Analytics.getDailyStatsForSet, 'analytics:pageviews:byCid:' + cid, Date.now(), 30),
 			'topics:daily': async.apply(Analytics.getDailyStatsForSet, 'analytics:topics:byCid:' + cid, Date.now(), 7),
 			'posts:daily': async.apply(Analytics.getDailyStatsForSet, 'analytics:posts:byCid:' + cid, Date.now(), 7),
+			'resolutions': async.apply(Analytics.getTotalResolved, cid)
 		}, callback);
 	};
 

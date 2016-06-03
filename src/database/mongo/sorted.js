@@ -393,6 +393,28 @@ module.exports = function(db, module) {
 		});
 	};
 
+	module.getResolvedCount = function(cid, callback) {
+		if (!cid) {
+			return callback();
+		}
+		var	returnData = new Array(2);
+
+		db.collection('objects').find({ resolved: 1, cid:cid }).count(function(err, result) {
+			if (err) {
+				return callback(err);
+			}
+			returnData[0] = result;
+
+			db.collection('objects').find({ $or: [ { resolved: null }, { resolved: 0 } ], cid:cid }).count(function(err, result) {
+				if (err) {
+					return callback(err);
+				}
+				returnData[1] = result;
+				callback(null, returnData);
+			});
+		});
+	};
+
 	module.isSortedSetMember = function(key, value, callback) {
 		if (!key) {
 			return callback();

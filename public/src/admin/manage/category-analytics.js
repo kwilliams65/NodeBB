@@ -9,6 +9,7 @@ define('admin/manage/category-analytics', ['Chart'], function(Chart) {
 			dailyCanvas = document.getElementById('pageviews:daily'),
 			topicsCanvas = document.getElementById('topics:daily'),
 			postsCanvas = document.getElementById('posts:daily'),
+			resolvedCanvas = document.getElementById('resolutions'),
 			hourlyLabels = utils.getHoursArray().map(function(text, idx) {
 				return idx % 3 ? '' : text;
 			}),
@@ -80,6 +81,10 @@ define('admin/manage/category-analytics', ['Chart'], function(Chart) {
 						data: ajaxify.data.analytics['posts:daily']
 					}
 				]
+			},
+			'resolutions': {
+				resolved: ajaxify.data.analytics.resolutions[0],
+				unresolved: ajaxify.data.analytics.resolutions[1]
 			}
 		};
 
@@ -87,6 +92,7 @@ define('admin/manage/category-analytics', ['Chart'], function(Chart) {
 		dailyCanvas.width = $(dailyCanvas).parent().width();
 		topicsCanvas.width = $(topicsCanvas).parent().width();
 		postsCanvas.width = $(postsCanvas).parent().width();
+		resolvedCanvas.width = $(resolvedCanvas).parent().width();
 		new Chart(hourlyCanvas.getContext('2d')).Line(data['pageviews:hourly'], {
 			responsive: true,
 			animation: false
@@ -103,6 +109,23 @@ define('admin/manage/category-analytics', ['Chart'], function(Chart) {
 			responsive: true,
 			animation: false
 		});
+
+		var resolutionData = [
+			{
+				value: data['resolutions'].resolved,
+				color:"#F7464A",
+				highlight: "#FF5A5E",
+				label: "Resolved"
+			},
+			{
+				value: data['resolutions'].unresolved,
+				color: "#46BFBD",
+				highlight: "#5AD3D1",
+				label: "Unresolved"
+			}
+		]
+
+		new Chart(resolvedCanvas.getContext('2d')).Doughnut(resolutionData);
 	};
 
 	return CategoryAnalytics;
